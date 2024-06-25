@@ -1,0 +1,88 @@
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+ext {
+    app_group = 'com.withwiz'
+    version_project = 'v0.0.1'
+    version_fullVersion = version_project + '.' + LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault()).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+
+    version_commons_cli = '1.5.0'
+    version_commons_lang = '3.12.0'
+    version_commons_codec = '1.14'
+    version_httpclient = '4.5.14'
+    version_httpcore = '4.4.16'
+    version_jackson = '2.14.2'
+    version_java = JavaVersion.VERSION_17
+    version_logback = '1.4.14'
+    version_lombok = '1.18.26'
+    version_netty = '4.1.50.Final'
+    version_okhttp = '4.12.0'
+    version_quartz = '2.3.2'
+    version_slf4j = '1.7.30'
+    version_spring = '5.3.10'
+    project_build_sourceEncoding = 'UTF-8'
+}
+
+group = ext.app_group
+version = ext.version_project
+sourceCompatibility = ext.version_java
+targetCompatibility = ext.version_java
+compileJava.options.encoding = ext.project_build_sourceEncoding
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo1.maven.org/maven2/" }
+    maven { url "https://repo.maven.apache.org/maven2/" }
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${version_slf4j}"
+    implementation group: 'org.slf4j', name: 'jcl-over-slf4j', version: "${version_slf4j}"
+    implementation group: 'org.slf4j', name: 'log4j-over-slf4j', version: "${version_slf4j}"
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: "${version_logback}"
+
+    implementation group: 'org.projectlombok', name: 'lombok', version: "${version_lombok}"
+    annotationProcessor("org.projectlombok:lombok:${version_lombok}")
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${version_jackson}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: "${version_jackson}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${version_jackson}"
+
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "${version_okhttp}"
+
+    implementation "org.apache.httpcomponents:httpclient:${version_httpclient}"
+    implementation "org.apache.httpcomponents:httpcore:${version_httpcore}"
+    implementation "org.apache.httpcomponents:httpmime:${version_httpclient}"
+
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: "${version_commons_lang}"
+    implementation group: 'commons-codec', name: 'commons-codec', version: "${version_commons_codec}"
+    implementation "commons-cli:commons-cli:${version_commons_cli}"
+
+    implementation "io.netty:netty-all:${version_netty}"
+    implementation group: 'org.quartz-scheduler', name: 'quartz', version: "${version_quartz}"
+
+    implementation "org.springframework:spring-context:${version_spring}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
