@@ -1,16 +1,21 @@
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'com.vanniktech.maven.publish' version '0.28.0'
+    id 'signing'
 }
 
 ext {
     app_group = 'com.withwiz'
-    version_project = 'v0.0.1'
-    version_fullVersion = version_project + '.' + LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault()).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+    app_name = 'sandbeach'
+    version_project = '0.0.1'
+    version_fullVersion = version_project + '.' \
+    + LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault()).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
 
     version_commons_cli = '1.5.0'
     version_commons_lang = '3.12.0'
@@ -37,8 +42,6 @@ compileJava.options.encoding = ext.project_build_sourceEncoding
 
 repositories {
     mavenCentral()
-    maven { url "https://repo1.maven.org/maven2/" }
-    maven { url "https://repo.maven.apache.org/maven2/" }
 }
 
 configurations {
@@ -48,6 +51,12 @@ configurations {
     }
     compileOnly {
         extendsFrom annotationProcessor
+    }
+}
+
+tasks.withType(Javadoc) {
+    options {
+        encoding 'UTF-8'
     }
 }
 
@@ -85,4 +94,41 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+mavenPublishing {
+    signAllPublications()
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    coordinates("${app_group}", "${app_name}", "${version_project}")
+    pom {
+        name = "${app_name}"
+        description = 'The Withwiz sandbeach library/framework provides a modern way of implementing system integration, interfaces, utilities.'
+        url = '<https://github.com/greeun/sandbeach>'
+
+        licenses {
+            license {
+                name = 'Apache License 2.0'
+                url = '<https://github.com/greeun/sandbeach/blob/main/LICENSE>'
+            }
+        }
+
+        developers {
+            developer {
+                id = 'greeun'
+                email = 'ss@withwiz.com'
+            }
+        }
+    }
+
+}
+
+scm {
+    connection = 'scm:git:github.com/greeun/sandbeach.git'
+    developerConnection = 'scm:git:ssh://github.com/greeun/sandbeach.git'
+    url = '<https://github.com/greeun/sandbeach/tree/master>'
+}
+
+signing {
+    sign publishing.publications
 }
