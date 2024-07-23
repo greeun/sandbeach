@@ -21,5 +21,5 @@ public class Bot {
     /**
      * chat-id
      */
-    long chatId;
+    String chatId;
 }
