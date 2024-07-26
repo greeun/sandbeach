@@ -13,7 +13,7 @@ plugins {
 ext {
     app_group = 'com.withwiz'
     app_name = 'sandbeach'
-    version_project = '0.0.1'
+    version_project = '0.0.2'
     version_fullVersion = version_project + '.' \
     + LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault()).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
 
