@@ -13,7 +13,7 @@ plugins {
 ext {
     app_group = 'com.withwiz'
     app_name = 'sandbeach'
-    version_project = '0.0.1'
+    version_project = '0.0.2'
     version_fullVersion = version_project + '.' \
     + LocalDateTime.ofInstant(Instant.now(), ZoneOffset.systemDefault()).format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
 
@@ -96,6 +96,10 @@ test {
     useJUnitPlatform()
 }
 
+signing {
+    sign publishing.publications
+}
+
 mavenPublishing {
     signAllPublications()
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
@@ -119,16 +123,12 @@ mavenPublishing {
                 email = 'ss@withwiz.com'
             }
         }
+
+        scm {
+            connection = 'scm:git:github.com/greeun/sandbeach.git'
+            developerConnection = 'scm:git:ssh://github.com/greeun/sandbeach.git'
+            url = '<https://github.com/greeun/sandbeach/tree/master>'
+        }
     }
-
 }
 
-scm {
-    connection = 'scm:git:github.com/greeun/sandbeach.git'
-    developerConnection = 'scm:git:ssh://github.com/greeun/sandbeach.git'
-    url = '<https://github.com/greeun/sandbeach/tree/master>'
-}
-
-signing {
-    sign publishing.publications
-}

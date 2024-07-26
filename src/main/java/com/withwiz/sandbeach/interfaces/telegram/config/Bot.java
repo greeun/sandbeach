@@ -11,15 +11,15 @@ public class Bot {
     /**
      * name
      */
-    String name;
+    protected String name;
 
     /**
      * token
      */
-    String token;
+    protected String token;
 
     /**
      * chat-id
      */
-    long chatId;
+    protected String chatId;
 }

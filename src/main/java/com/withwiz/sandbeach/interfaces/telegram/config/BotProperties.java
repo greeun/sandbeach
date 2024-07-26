@@ -13,5 +13,5 @@ public class BotProperties {
     /**
      * bot list
      */
-    List<Bot> bots;
+    protected List<Bot> bots;
 }

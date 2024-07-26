@@ -3,14 +3,12 @@ package com.withwiz.sandbeach.interfaces.telegram;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.withwiz.sandbeach.interfaces.telegram.dto.TelegramResponseSendMessage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.withwiz.sandbeach.interfaces.telegram.dto.TelegramResponseSendMessage;
 
 import java.io.IOException;
 import java.util.Arrays;
